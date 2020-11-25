@@ -74,7 +74,7 @@ Optimised button timing
 
 *Version 2.2 02/11/2020*
 Adjusted digipot value to reduce bleed into next function - seek & volume
-GPIO
+
 *Version 2.3 25/11/2020*
 Modfied ring function to use GPIO instead of digipot. GPIO is set to INPUT after being pulled low to enter make it high impedance.
 Added phone commands for hang up and answer found ond JVDE in the comment section
