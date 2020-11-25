@@ -34,11 +34,15 @@ Optimised button timing
 
 Version 1.2 02/11/2020
 Adjusted digipot value to reduce bleed into next function - seek & volume
+
+Version 1.3 25/11/2020
+Modified Ring function to use GPIO A0 instead of digipot
  */
  
 #include <AceButton.h>
 #include <SPI.h>
 using namespace ace_button;
+#define RING_GND      A0 // GND for Ring
 
 // Set the SWC input PIN
 static const uint8_t BUTTON_PIN = A6;
@@ -111,8 +115,9 @@ void setup() {
   digitalWrite(csPin, LOW);
   SPI.transfer(wiperTip); // command
   SPI.transfer(ground); // value
-  SPI.transfer(wiperRing); // command
-  SPI.transfer(255); // float the ring circuit
+  //SPI.transfer(wiperRing); // command
+  //SPI.transfer(255); // float the ring circuit
+  pinMode(RING_GND, INPUT); // Set GPIO to INPUT for high impedance
   digitalWrite(csPin, HIGH);
   Serial.println(" Ready");
 }
@@ -143,17 +148,20 @@ void wrTip(int digiValue, int delayMs) {
 // in combination with taking the ring to ground
 void wrRing(int digiValue, int delayMs) {
       digitalWrite(csPin, LOW);
-      SPI.transfer(wiperRing);
-      SPI.transfer(ground);
+//      SPI.transfer(wiperRing);
+//      SPI.transfer(ground);
 //      Serial.println(" Select Ring, ground"); // for debug
+      pinMode(RING_GND, OUTPUT); //GPIO A0 to output
+      digitalWrite(RING_GND, LOW); //GPIO A0 to GND
       SPI.transfer(wiperTip);
       SPI.transfer(digiValue);
 //      Serial.println(" Select Tip, button"); // for debug
       delay(delayMs);
       SPI.transfer(wiperTip);
       SPI.transfer(ground);
-      SPI.transfer(wiperRing);
-      SPI.transfer(255); // float
+//      SPI.transfer(wiperRing);
+//      SPI.transfer(255); // float
+      pinMode(RING_GND, INPUT); //GPIO A0 to INPUT for high impedance
 //      Serial.println(" Button Release"); // for debug
       digitalWrite(csPin, HIGH);
 }
