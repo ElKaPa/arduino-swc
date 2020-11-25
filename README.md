@@ -49,6 +49,7 @@ Display | 5,75 | 12 - 16 | 50ms | Tip
 Mute | 3,5 | 6 - 11 | 50ms | Tip
 Voice Control | 6,7k | 98 - 232 | 1000ms | Ring
 Hang-up | 5,5k | 14 | 50ms | Tip
+Answer | 3K | 9 | 50ms | Ring
 
 *Note, **Band** in some modes can result in Play / Pause and **Voice Control** is dependant on Pioneer model and mobile phone*
 
@@ -73,4 +74,8 @@ Optimised button timing
 
 *Version 2.2 02/11/2020*
 Adjusted digipot value to reduce bleed into next function - seek & volume
+GPIO
+*Version 2.3 25/11/2020*
+Modfied ring function to use GPIO instead of digipot. GPIO is set to INPUT after being pulled low to enter make it high impedance.
+Added phone commands for hang up and answer found ond JVDE in the comment section
 
